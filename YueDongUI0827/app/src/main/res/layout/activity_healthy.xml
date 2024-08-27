@@ -1,0 +1,414 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/healthy"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ECECEC"
+    android:orientation="vertical">
+
+    <!--顶部导航栏-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="#FFFFFF"
+        android:orientation="horizontal"
+        android:layout_alignParentTop ="true">
+
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="100dp"
+            android:layout_height="64dp"
+            android:gravity="center"
+            android:text="健康"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+
+    </RelativeLayout>
+
+    <!--底部导航栏-->
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="64dp"
+        android:orientation="vertical"
+        android:background="@drawable/home"
+        android:padding="30dp">
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="242dp"
+            android:background="@drawable/radius_shape"
+            android:orientation="vertical">
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="143dp"
+                android:layout_margin="5dp">
+
+                <ProgressBar
+                    android:id="@+id/progressBar3"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="113dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView4"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:gravity="center"
+                        android:text="步数"
+                        android:textSize="21sp" />
+
+                    <TextView
+                        android:id="@+id/SetStepCount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:text="3000步"
+                        android:textSize="17dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="111dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView5"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:gravity="center"
+                        android:text="里程"
+                        android:textSize="21sp" />
+
+                    <TextView
+                        android:id="@+id/SetMileCount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="17dp"
+                        android:gravity="center"
+                        android:text="3500米" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="match_parent"
+                        android:layout_height="45dp"
+                        android:gravity="center"
+                        android:text="时长"
+                        android:textSize="21sp" />
+
+                    <TextView
+                        android:id="@+id/SetTimeCount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:textSize="17dp"
+                        android:gravity="center"
+                        android:text="25分钟" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="354dp"
+            android:layout_height="105dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/radius_shape"
+            android:orientation="horizontal">
+
+
+            <LinearLayout
+                android:layout_width="263dp"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/textView11"
+                    android:layout_width="51dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="6dp"
+                    android:gravity="center"
+                    android:text="我的计划"
+                    android:textSize="21dp"
+                    android:textStyle="bold"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:padding="8dp">
+
+                    <TextView
+                        android:id="@+id/targetStepCount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="目标步数：3000步"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textSize="17dp"/>
+
+                    <TextView
+                        android:id="@+id/targetMileCount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="目标里程：5000米"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textSize="17dp" />
+
+                    <TextView
+                        android:id="@+id/targetTimeCount"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="目标时长：60分钟"
+                        android:layout_weight="1"
+                        android:gravity="center"
+                        android:textSize="17dp"/>
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/toDetailPlan"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/set" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:orientation="vertical"
+            android:layout_marginTop="20dp"
+            >
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="75dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="163dp"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_margin="6dp"
+                    android:background="@drawable/radius_shape"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:id="@+id/exerciseHistoryInfo"
+                        android:layout_width="150dp"
+                        android:layout_height="38dp"
+                        android:layout_weight="1"
+                        android:text="运动历史"
+                        android:textSize="21dp"
+                        android:textStyle="bold"
+                        android:padding="5dp"/>
+
+                    <ImageView
+                        android:id="@+id/exerciseIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/record"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="163dp"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_margin="6dp"
+                    android:background="@drawable/radius_shape"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:id="@+id/healthInfo"
+                        android:layout_width="150dp"
+                        android:layout_height="38dp"
+                        android:layout_weight="1"
+                        android:text="身体素质"
+                        android:textSize="21dp"
+                        android:textStyle="bold"
+                        android:padding="5dp"/>
+
+                    <ImageView
+                        android:id="@+id/healthIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/weight"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="163dp"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_margin="6dp"
+                    android:background="@drawable/radius_shape"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:id="@+id/booldPressureInfo"
+                        android:layout_width="150dp"
+                        android:layout_height="38dp"
+                        android:layout_weight="1"
+                        android:text="血压监测"
+                        android:textSize="21dp"
+                        android:textStyle="bold"
+                        android:padding="5dp"/>
+
+                    <ImageView
+                        android:id="@+id/bloodPressureIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/blood_pressure"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="163dp"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    android:layout_margin="6dp"
+                    android:background="@drawable/radius_shape"
+                    android:padding="12dp">
+
+                    <TextView
+                        android:id="@+id/heartBeatInfo"
+                        android:layout_width="150dp"
+                        android:layout_height="38dp"
+                        android:layout_weight="1"
+                        android:text="心率监测"
+                        android:textSize="21dp"
+                        android:textStyle="bold"
+                        android:padding="5dp"/>
+
+                    <ImageView
+                        android:id="@+id/heartBeatIcon"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/heart"/>
+                </LinearLayout>
+
+            </LinearLayout>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_alignParentBottom="true"
+        android:background="#FFFFFF">
+
+
+        <LinearLayout
+            android:layout_width="136dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="#DDDDDD">
+
+            <ImageView
+                android:id="@+id/picHealth"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                app:srcCompat="@drawable/health"
+                android:layout_gravity="center"
+                android:layout_marginTop="6dp"
+                />
+
+            <TextView
+                android:id="@+id/textHealth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="健康"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="137dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <ImageView
+                android:id="@+id/picExercise"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                app:srcCompat="@drawable/exercise"
+                android:layout_gravity="center"
+                android:layout_marginTop="6dp"/>
+
+            <TextView
+                android:id="@+id/textExercise"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="运动"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="139dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <ImageView
+                android:id="@+id/picSetting"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                app:srcCompat="@drawable/setting"
+                android:layout_gravity="center"
+                android:layout_marginTop="6dp"/>
+
+            <TextView
+                android:id="@+id/textSetting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="健康"
+                android:gravity="center"/>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>

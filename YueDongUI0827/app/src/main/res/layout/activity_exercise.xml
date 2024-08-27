@@ -1,0 +1,358 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/exercise"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ECECEC"
+    android:orientation="vertical">
+
+    <!--顶部导航栏-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:background="#FFFFFF"
+        android:orientation="horizontal"
+        android:layout_alignParentTop ="true">
+
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="100dp"
+            android:layout_height="64dp"
+            android:gravity="center"
+            android:text="运动"
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
+
+    </RelativeLayout>
+
+    <!--界面内容-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="64dp"
+        android:layout_marginBottom="64dp"
+        android:orientation="vertical">
+
+    <!--Map控件-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            >
+
+
+            <LinearLayout
+                android:layout_width="375dp"
+                android:layout_height="130dp"
+                android:background="@drawable/radius_shape"
+                android:elevation="1dp"
+                android:orientation="horizontal"
+                android:layout_margin="50dp">
+
+
+                <LinearLayout
+                    android:layout_width="118dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView3"
+                        android:layout_width="match_parent"
+                        android:layout_height="66dp"
+                        android:gravity="center"
+                        android:text="用时"
+                        android:textSize="30dp" />
+
+                    <TextView
+                        android:id="@+id/UseTime"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="00:00:00"
+                        android:textSize="22dp"
+                        android:gravity="center"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="51dp"
+                        android:orientation="horizontal">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="92dp"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:id="@+id/runMileDescription"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="25dp"
+                                    android:gravity="center"
+                                    android:text="里程" />
+
+                                <TextView
+                                    android:id="@+id/runMile"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_weight="1"
+                                    android:gravity="center"
+                                    android:text="xxxkm" />
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="92dp"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/runSpeedDescription"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="25dp"
+                                        android:gravity="center"
+                                        android:text="配速" />
+
+                                    <TextView
+                                        android:id="@+id/runSpeed"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:text="xxxkm/h" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/shape_line_dash" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="51dp"
+                        android:orientation="horizontal">
+
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:layout_width="92dp"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="92dp"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/heartBeatDiscribe"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="25dp"
+                                        android:gravity="center"
+                                        android:text="心率" />
+
+                                    <TextView
+                                        android:id="@+id/heartBeat"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:text="xxxbpm" />
+                                </LinearLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:orientation="vertical">
+
+                                <LinearLayout
+                                    android:layout_width="92dp"
+                                    android:layout_height="match_parent"
+                                    android:orientation="vertical">
+
+                                    <TextView
+                                        android:id="@+id/runEnergyDiscribe"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="25dp"
+                                        android:gravity="center"
+                                        android:text="能量" />
+
+                                    <TextView
+                                        android:id="@+id/runEnergy"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:layout_weight="1"
+                                        android:gravity="center"
+                                        android:text="xxxkcal" />
+                                </LinearLayout>
+                            </LinearLayout>
+                        </LinearLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="98dp"
+                android:layout_height="178dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="64dp"
+
+                android:elevation="1dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_gravity="center"
+                    android:background="@drawable/circle_shape"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/startExercise"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        app:srcCompat="@drawable/go" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="75dp"
+                    android:layout_height="75dp"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/circle_shape"
+
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/communityRank"
+                        android:layout_width="wrap_content"
+                        android:layout_height="60dp"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        app:srcCompat="@drawable/rank" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <com.amap.api.maps.MapView
+                android:id="@+id/map"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+
+        </RelativeLayout>
+
+
+
+
+    </LinearLayout>
+
+
+
+    <!--底部导航栏-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="64dp"
+        android:layout_alignParentBottom="true"
+        android:background="#FFFFFF">
+
+
+
+        <LinearLayout
+            android:layout_width="136dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/picHealth"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                app:srcCompat="@drawable/health"
+                android:layout_gravity="center"
+                android:layout_marginTop="6dp"
+                />
+
+            <TextView
+                android:id="@+id/textHealth"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="健康"
+                android:gravity="center"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="137dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:background="#DDDDDD">
+
+
+            <ImageView
+                android:id="@+id/picExercise"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                app:srcCompat="@drawable/exercise"
+                android:layout_gravity="center"
+                android:layout_marginTop="6dp"/>
+
+            <TextView
+                android:id="@+id/textExercise"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="运动"
+                android:gravity="center"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="139dp"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+
+            <ImageView
+                android:id="@+id/picSetting"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                app:srcCompat="@drawable/setting"
+                android:layout_gravity="center"
+                android:layout_marginTop="6dp"/>
+
+            <TextView
+                android:id="@+id/textSetting"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="健康"
+                android:gravity="center"/>
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>
