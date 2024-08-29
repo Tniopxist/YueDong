@@ -36,7 +36,7 @@
         android:layout_marginBottom="64dp"
         android:orientation="vertical">
 
-    <!--Map控件-->
+        <!--Map控件-->
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -217,12 +217,13 @@
 
             <LinearLayout
                 android:layout_width="98dp"
-                android:layout_height="178dp"
+                android:layout_height="240dp"
                 android:layout_alignParentBottom="true"
                 android:layout_marginBottom="64dp"
 
                 android:elevation="1dp"
                 android:orientation="vertical">
+
 
                 <LinearLayout
                     android:layout_width="75dp"
@@ -246,7 +247,6 @@
                     android:layout_gravity="center"
                     android:layout_marginTop="10dp"
                     android:background="@drawable/circle_shape"
-
                     android:orientation="horizontal">
 
                     <ImageView
@@ -263,6 +263,28 @@
                 android:id="@+id/map"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:id="@+id/end"
+                android:layout_width="75dp"
+                android:layout_height="75dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="end"
+                android:layout_marginRight="10dp"
+                android:layout_marginBottom="225dp"
+                android:background="@drawable/circle_shape"
+                android:gravity="bottom|right"
+                android:orientation="horizontal"
+                android:visibility="invisible">
+
+                <ImageView
+                    android:id="@+id/endExercise"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    app:srcCompat="@drawable/end" />
+            </LinearLayout>
 
 
         </RelativeLayout>
@@ -282,8 +304,8 @@
         android:background="#FFFFFF">
 
 
-
         <LinearLayout
+            android:id="@+id/navHealth"
             android:layout_width="136dp"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -292,44 +314,45 @@
                 android:id="@+id/picHealth"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                app:srcCompat="@drawable/health"
                 android:layout_gravity="center"
                 android:layout_marginTop="6dp"
-                />
+                app:srcCompat="@drawable/health" />
 
             <TextView
                 android:id="@+id/textHealth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="健康"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:text="健康" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/navExercise"
             android:layout_width="137dp"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:background="#DDDDDD">
+            android:background="#DDDDDD"
+            android:orientation="vertical">
 
 
             <ImageView
                 android:id="@+id/picExercise"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                app:srcCompat="@drawable/exercise"
                 android:layout_gravity="center"
-                android:layout_marginTop="6dp"/>
+                android:layout_marginTop="6dp"
+                app:srcCompat="@drawable/exercise" />
 
             <TextView
                 android:id="@+id/textExercise"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="运动"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:text="运动" />
 
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/navSetting"
             android:layout_width="139dp"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -339,16 +362,16 @@
                 android:id="@+id/picSetting"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                app:srcCompat="@drawable/setting"
                 android:layout_gravity="center"
-                android:layout_marginTop="6dp"/>
+                android:layout_marginTop="6dp"
+                app:srcCompat="@drawable/setting" />
 
             <TextView
                 android:id="@+id/textSetting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="健康"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:text="设置" />
 
 
         </LinearLayout>
