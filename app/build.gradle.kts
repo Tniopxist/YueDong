@@ -9,7 +9,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.app"
-        minSdk = 24
+        minSdk = 26
         targetSdk = 34
         versionCode = 1
         versionName = "1.0"
@@ -44,6 +44,12 @@ android {
 dependencies {
     // 高德3d地图
     implementation ("com.amap.api:3dmap:latest.integration")
+    // 可视化图表
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
+    // 运动进度
+    implementation ("com.github.jakob-grabner:Circle-Progress-View:1.4")
+    // 运动计划弹窗
+    implementation ("com.afollestad.material-dialogs:bottomsheets:3.3.0")
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
