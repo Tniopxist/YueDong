@@ -1,223 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/history"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/register"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ECECEC"
+    android:background="@drawable/background"
+    android:baselineAligned="false"
     android:orientation="vertical"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".HistoryActivity">
+    tools:context=".MainActivity">
 
-    <!--顶部导航栏-->
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:background="#FFFFFF"
+    <TextView
+        android:id="@+id/welcome"
+        android:layout_width="325dp"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="130dp"
+        android:text="注册"
+        android:fontFamily="sans-serif-black"
+        android:textColor="@color/black"
+        android:textSize="45sp" />
+
+    <LinearLayout
         android:orientation="horizontal"
-        android:layout_alignParentTop ="true">
+        android:layout_width="325dp"
+        android:layout_height="75dp"
+        android:layout_gravity="center">
 
+        <EditText
+            android:id="@+id/registerAcc"
+            android:layout_width="231dp"
+            android:layout_height="74dp"
+            android:layout_gravity="center"
+            android:hint="请输入账号/手机号"
+            android:layout_marginTop="30dp"
+            android:maxLines="1"
+            android:textColor="#FFFFFF"
+            android:textSize="24sp" />
 
         <TextView
-            android:id="@+id/textView"
-            android:layout_width="150dp"
-            android:layout_height="64dp"
-            android:gravity="center"
-            android:text="运动历史"
-            android:textSize="25sp"
-            android:textStyle="bold" />
-
-
-
-    </RelativeLayout>
-
-
-    <!--页面内容-->
-
-    <!--静态的下面是-->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="64dp"
-        android:orientation="vertical"
-        android:background="@drawable/home"
-        android:padding="30dp">
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:orientation="vertical"
-            android:layout_marginTop="30dp"
-            android:background="@drawable/radius_shape">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="64dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/historyTime"
-                    android:layout_width="match_parent"
-                    android:layout_height="50dp"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center"
-                    android:text="运动时间：xxxmin"
-                    android:textSize="20dp" />
-            </LinearLayout>
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/shape_line_dash" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:orientation="horizontal">
-
-                <LinearLayout
-                    android:layout_width="113dp"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:id="@+id/historyMileDescription"
-                        android:layout_width="match_parent"
-                        android:layout_height="25dp"
-                        android:text="里程"
-                        android:gravity="center"/>
-
-                    <TextView
-                        android:id="@+id/historyMile"
-                        android:layout_width="match_parent"
-                        android:layout_height="25dp"
-                        android:text="xxxkm"
-                        android:gravity="center"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="114dp"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/historySpeedDescription"
-                        android:layout_width="match_parent"
-                        android:layout_height="25dp"
-                        android:text="配速"
-                        android:gravity="center"/>
-
-                    <TextView
-                        android:id="@+id/historySpeed"
-                        android:layout_width="match_parent"
-                        android:layout_height="25dp"
-                        android:text="xxxkm/h"
-                        android:gravity="center"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="113dp"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-                    <TextView
-                        android:id="@+id/historyCalDescription"
-                        android:layout_width="match_parent"
-                        android:layout_height="25dp"
-                        android:text="能量"
-                        android:gravity="center"/>
-
-                    <TextView
-                        android:id="@+id/historyCal"
-                        android:layout_width="match_parent"
-                        android:layout_height="25dp"
-                        android:text="xxxkcal"
-                        android:gravity="center"/>
-                </LinearLayout>
-            </LinearLayout>
-
-        </LinearLayout>
+            android:id="@+id/code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="获取验证码"
+            android:layout_marginTop="30dp"/>
 
 
     </LinearLayout>
 
-    <!--底部导航栏-->
+
+
+    <EditText
+        android:id="@+id/inputCode"
+        android:layout_width="325dp"
+        android:layout_height="74dp"
+        android:layout_gravity="center"
+        android:hint="请输入验证码"
+        android:padding="30px"
+        android:maxLines="1"
+        android:inputType="textPassword"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="79dp"
+        tools:layout_editor_absoluteY="363dp" />
+    <EditText
+        android:id="@+id/registerPwd"
+        android:layout_width="325dp"
+        android:layout_height="74dp"
+        android:layout_gravity="center"
+        android:hint="请输入密码"
+        android:padding="30px"
+        android:maxLines="1"
+        android:inputType="textPassword"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp"
+        tools:layout_editor_absoluteX="79dp"
+        tools:layout_editor_absoluteY="363dp" />
+
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="64dp"
-        android:layout_alignParentBottom="true"
-        android:background="#FFFFFF">
+        android:layout_width="325dp"
+        android:layout_height="124dp"
+        android:layout_gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginTop="13dp">
 
-
-        <LinearLayout
+        <TextView
+            android:id="@+id/goLogin"
             android:layout_width="136dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"
+            android:layout_marginRight="8dp"
+            android:layout_weight="1"
+            android:background="@drawable/text_underline"
+            android:maxWidth="130px"
+            android:text="已有账号？前往登录" />
 
-            <ImageView
-                android:id="@+id/picHealth"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                app:srcCompat="@drawable/health"
-                android:layout_gravity="center"
-                android:layout_marginTop="6dp"
-                />
-
-            <TextView
-                android:id="@+id/textHealth"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="健康"
-                android:gravity="center"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="137dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+        <Button
+            android:id="@+id/btn_register"
+            android:layout_width="117dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="10dp"
+            android:background="@drawable/round_corner"
+            android:shadowColor="@color/black"
+            android:text="注册" />
 
 
-            <ImageView
-                android:id="@+id/picExercise"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                app:srcCompat="@drawable/exercise"
-                android:layout_gravity="center"
-                android:layout_marginTop="6dp"/>
-
-            <TextView
-                android:id="@+id/textExercise"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="运动"
-                android:gravity="center"/>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="139dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-
-            <ImageView
-                android:id="@+id/picSetting"
-                android:layout_width="35dp"
-                android:layout_height="35dp"
-                app:srcCompat="@drawable/setting"
-                android:layout_gravity="center"
-                android:layout_marginTop="6dp"/>
-
-            <TextView
-                android:id="@+id/textSetting"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="健康"
-                android:gravity="center"/>
-
-
-        </LinearLayout>
     </LinearLayout>
 
 
-
-</RelativeLayout>
+</LinearLayout>

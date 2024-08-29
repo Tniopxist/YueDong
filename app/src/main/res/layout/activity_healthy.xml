@@ -406,29 +406,30 @@
 
 
         <LinearLayout
+            android:id="@+id/navHealth"
             android:layout_width="136dp"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            android:background="#DDDDDD">
+            android:background="#DDDDDD"
+            android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/picHealth"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                app:srcCompat="@drawable/health"
                 android:layout_gravity="center"
                 android:layout_marginTop="6dp"
-                />
+                app:srcCompat="@drawable/health" />
 
             <TextView
                 android:id="@+id/textHealth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="健康"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:text="健康" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/navExercise"
             android:layout_width="137dp"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -438,20 +439,21 @@
                 android:id="@+id/picExercise"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                app:srcCompat="@drawable/exercise"
                 android:layout_gravity="center"
-                android:layout_marginTop="6dp"/>
+                android:layout_marginTop="6dp"
+                app:srcCompat="@drawable/exercise" />
 
             <TextView
                 android:id="@+id/textExercise"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="运动"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:text="运动" />
 
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/navSetting"
             android:layout_width="139dp"
             android:layout_height="match_parent"
             android:orientation="vertical">
@@ -461,16 +463,16 @@
                 android:id="@+id/picSetting"
                 android:layout_width="35dp"
                 android:layout_height="35dp"
-                app:srcCompat="@drawable/setting"
                 android:layout_gravity="center"
-                android:layout_marginTop="6dp"/>
+                android:layout_marginTop="6dp"
+                app:srcCompat="@drawable/setting" />
 
             <TextView
                 android:id="@+id/textSetting"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="健康"
-                android:gravity="center"/>
+                android:gravity="center"
+                android:text="设置" />
 
 
         </LinearLayout>

@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.example.app"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.app"
@@ -42,6 +42,13 @@ android {
 }
 
 dependencies {
+    //添加协程相关的依赖
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
+    //Retrofit
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    // Retrofit转换器
+    implementation ("com.squareup.retrofit2:converter-moshi:2.9.0")
     // 高德3d地图
     implementation ("com.amap.api:3dmap:latest.integration")
     // 可视化图表

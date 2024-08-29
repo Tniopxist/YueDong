@@ -4,6 +4,8 @@
     <!-- 用于进行网络定位 -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" /> <!-- 用于访问GPS定位 -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /> <!-- 获取运营商信息，用于支持提供运营商信息相关的接口 -->
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" /> <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位 -->
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位 -->
     <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" /> <!-- 用于访问网络 -->
@@ -23,6 +25,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.App"
         tools:targetApi="31">
+        <activity
+            android:name=".RankActivity"
+            android:exported="false" />
+        <activity
+            android:name=".ExerciseActivity"
+            android:exported="true">
+        </activity>
         <activity
             android:name=".BloodPressureActivity"
             android:exported="true">
@@ -44,6 +53,10 @@
             android:exported="true">
         </activity>
         <activity
+            android:name=".SettingActivity"
+            android:exported="true">
+        </activity>
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
@@ -52,6 +65,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <meta-data
+            android:name="com.amap.api.v2.apikey"
+            android:value="c0db473090620870b26d19ff73a17f8c" />
+
+        <service android:name="com.amap.api.location.APSService" />
     </application>
 
 </manifest>

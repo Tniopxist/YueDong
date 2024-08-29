@@ -77,6 +77,10 @@ class HealthyActivity : AppCompatActivity() {
                 negativeButton(text = "取消")
             }
         }
+
+        findViewById<LinearLayout>(R.id.navHealth).setOnClickListener { startActivity(Intent(this,HealthyActivity::class.java)) }
+        findViewById<LinearLayout>(R.id.navExercise).setOnClickListener { startActivity(Intent(this,ExerciseActivity::class.java)) }
+        findViewById<LinearLayout>(R.id.navSetting).setOnClickListener { startActivity(Intent(this,SettingActivity::class.java)) }
     }
 
     fun getStepProgress() : Int{
