@@ -1,18 +1,37 @@
 package com.example.app
 
+import android.app.AlertDialog
 import android.os.Bundle
+import android.util.Log
 import android.view.Gravity
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.app.data.UserDistanceRankData
+import com.example.app.http.MyToken
+import com.example.app.http.RankService
+import com.example.app.model.RankRequest
+import com.example.app.model.RankResponse
+import com.google.gson.Gson
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
+import java.time.Instant
 
 class RankActivity : AppCompatActivity() {
+    lateinit var list:UserDistanceRankData
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        getRankList()
+    }
+
+    private fun setupUI(){
         // ScrollView
         val scrollView = ScrollView(this).apply {
             setBackgroundResource(R.drawable.home)
@@ -58,7 +77,7 @@ class RankActivity : AppCompatActivity() {
 
         // 添加标题行
         val titleRow = createRow(
-            "排名", null, "昵称", "里程", "时长",
+            "排名", null, "昵称", "Id", "里程(km)",
             isTitle = true
         )
         rootLayout.addView(titleRow)
@@ -67,14 +86,75 @@ class RankActivity : AppCompatActivity() {
 
         // 动态创建数据行
         for (i in 4..20) {
+            var nickname = ""
+            var img = ""
+            var id = ""
+            var distance = ""
+
+            if(list.userDistanceData.size >= i){
+                nickname = list.userDistanceData.get(i-1).nickName
+                img = list.userDistanceData.get(i-1).headerImg
+                id = list.userDistanceData.get(i-1).userId.toString()
+                distance = list.userDistanceData.get(i-1).distance.toString()
+            }
+
             val dataRow = createRow(
-                "$i", "", "昵称 $i", "100$i", "200$i"
+                "$i", img, nickname, id, distance
             )
             rootLayout.addView(dataRow)
         }
 
         scrollView.addView(rootLayout)
         setContentView(scrollView)
+    }
+
+    private fun nullRankUI(){
+        // 垂直方向的LinearLayout
+        val rootLayout = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.MATCH_PARENT
+            ).apply {
+                setMargins(25, 16, 25, 16)  // 设置根布局的边距
+                setPadding(10, 25, 10, 25)
+            }
+        }
+
+        // 返回按钮
+        val backButton = ImageView(this).apply {
+            setImageResource(R.drawable.exit)
+            layoutParams = LinearLayout.LayoutParams(
+                75,
+                75
+            ).apply {
+                gravity = Gravity.START
+                setMargins(40, 40, 0, 40)
+            }
+            setOnClickListener {
+                finish()  // 返回上一个Activity
+            }
+        }
+
+        // 添加返回按钮到根布局
+        rootLayout.addView(backButton)
+
+        // 排名
+        val textView = TextView(this@RankActivity).apply {
+            text = "当前暂无排名"
+            textSize = 20f
+            layoutParams = LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT,
+                1f
+            ).apply {
+                setMargins(15, 5, 0, 0)
+            }
+        }
+
+        rootLayout.addView(textView)
+
+        setContentView(rootLayout)
     }
 
     // 创建奖台布局
@@ -87,19 +167,54 @@ class RankActivity : AppCompatActivity() {
             )
             gravity = Gravity.CENTER
 
-            //获取前三名数据
+            var nickname1:String = ""
+            var img1:String= ""
+            var id1:String= ""
+            var distance1:String= ""
+            var nickname2 :String= ""
+            var img2 :String= ""
+            var id2 :String= ""
+            var distance2 :String= ""
+            var nickname3 :String= ""
+            var img3 :String= ""
+            var id3 :String= ""
+            var distance3 :String= ""
+
+
+            if(list.userDistanceData.size > 0 ) {
+                //获取前三名数据
+                nickname1 = list.userDistanceData.get(0).nickName
+                img1 = list.userDistanceData.get(0).headerImg
+                id1 = list.userDistanceData.get(0).userId.toString()
+                distance1 = list.userDistanceData.get(0).distance.toString()
+
+                if (list.userDistanceData.size > 1) {
+                    nickname2 = list.userDistanceData.get(1).nickName
+                    img2 = list.userDistanceData.get(1).headerImg
+                    id2 = list.userDistanceData.get(1).userId.toString()
+                    distance2 = list.userDistanceData.get(1).distance.toString()
+
+                    if (list.userDistanceData.size > 2) {
+                        nickname3 = list.userDistanceData.get(2).nickName
+                        img3 = list.userDistanceData.get(2).headerImg
+                        id3 = list.userDistanceData.get(2).userId.toString()
+                        distance3 = list.userDistanceData.get(2).distance.toString()
+                    }
+                }
+            }
 
 
             // 第二名
-            addView(createPodiumItem("2", "","昵称 2", "1002", "2002", heightMultiplier = 0.65f))
+            addView(createPodiumItem("2", img2,nickname2, id2, distance2, heightMultiplier = 0.65f))
 
             // 第一名
-            addView(createPodiumItem("1", "","昵称 1", "1001", "2001", heightMultiplier = 1.0f))
+            addView(createPodiumItem("1", img1,nickname1, id1, distance1, heightMultiplier = 1.0f))
 
             // 第三名
-            addView(createPodiumItem("3", "","昵称 3", "1003", "2003", heightMultiplier = 0.35f))
+            addView(createPodiumItem("3", img3,nickname3, id3, distance3, heightMultiplier = 0.35f))
         }
     }
+
 
     // 创建奖台上的每一项
     private fun createPodiumItem(
@@ -267,4 +382,56 @@ class RankActivity : AppCompatActivity() {
     private fun setBold(textView: TextView) {
         textView.paint.isFakeBoldText = true
     }
+
+    private  fun getRankList() {
+        val retrofit = MyToken(this).retrofit
+        val service = retrofit.create(RankService::class.java)
+
+        val nowtime = Instant.now().toString()
+
+        val rankRequest = RankRequest(nowtime,"",1,20)
+        Log.i("RankRequest", rankRequest.toString())
+
+        val call: Call<RankResponse> = service.getRankList(rankRequest)
+        call.enqueue(object : Callback<RankResponse> {
+            override fun onResponse(call: Call<RankResponse>, response: Response<RankResponse>) {
+                if (response.isSuccessful()) {
+                    val rankResponse: RankResponse? = response.body()
+                    // 处理响应数据
+                    if (rankResponse != null) {
+                        // 根据 code 值判断处理逻辑
+                        if (rankResponse.code == 1) {
+                            if(rankResponse.data.list != null){
+                                list = Gson().fromJson(rankResponse.data.list,UserDistanceRankData::class.java)
+                                // 当数据成功获取后，初始化 UI
+                                setupUI()
+                            }else{
+                                showAlertDialog("当前排行榜为空")
+                                nullRankUI()
+                            }
+                        } else {
+                            showAlertDialog(rankResponse.message)
+                        }
+                        Log.d("RankList", "Response: " + rankResponse.toString())
+                    }
+                } else {
+                    Log.e("RankList", "请求失败: " + response.message())
+                }
+            }
+
+            override fun onFailure(call: Call<RankResponse>, t: Throwable) {
+                Log.e("RankList", "网络请求失败: ", t)
+            }
+        })
+    }
+
+
+    private fun showAlertDialog(message: String) {
+        AlertDialog.Builder(this)
+            .setTitle("提示")
+            .setMessage(message)
+            .setPositiveButton("确定", null)
+            .show()
+    }
+
 }

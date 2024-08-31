@@ -45,6 +45,10 @@ dependencies {
     //添加协程相关的依赖
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.0")
     implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.0")
+<<<<<<< HEAD
+=======
+
+>>>>>>> c972ec1 (sport module connectes to server)
     //Retrofit
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     // Retrofit转换器
@@ -59,6 +63,12 @@ dependencies {
     // 运动计划弹窗
     implementation ("com.afollestad.material-dialogs:bottomsheets:3.3.0")
 
+<<<<<<< HEAD
+=======
+    // jackson依赖
+//    implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.15.2")
+
+>>>>>>> c972ec1 (sport module connectes to server)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)

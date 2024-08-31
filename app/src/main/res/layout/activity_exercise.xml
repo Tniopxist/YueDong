@@ -109,7 +109,7 @@
                                     android:layout_height="wrap_content"
                                     android:layout_weight="1"
                                     android:gravity="center"
-                                    android:text="xxxkm" />
+                                    android:text="0km" />
                             </LinearLayout>
 
                             <LinearLayout
@@ -135,7 +135,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
                                         android:gravity="center"
-                                        android:text="xxxkm/h" />
+                                        android:text="0km/h" />
                                 </LinearLayout>
                             </LinearLayout>
                         </LinearLayout>
@@ -180,7 +180,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
                                         android:gravity="center"
-                                        android:text="xxxbpm" />
+                                        android:text="0bpm" />
                                 </LinearLayout>
                             </LinearLayout>
 
@@ -207,7 +207,7 @@
                                         android:layout_height="wrap_content"
                                         android:layout_weight="1"
                                         android:gravity="center"
-                                        android:text="xxxkcal" />
+                                        android:text="0kcal" />
                                 </LinearLayout>
                             </LinearLayout>
                         </LinearLayout>

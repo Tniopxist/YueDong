@@ -75,6 +75,15 @@ class MainActivity : AppCompatActivity() {
                     if (loginResponse != null) {
                         // 根据 code 值判断处理逻辑
                         if (loginResponse.code == 1) {
+
+                            // 存储 token 到 SharedPreferences
+                            val token = loginResponse.data.token
+                            val sharedPreferences = getSharedPreferences("AppPreferences", MODE_PRIVATE)
+                            val editor = sharedPreferences.edit()
+                            editor.putString("token", token)
+                            editor.apply()
+                            Log.i("Token:",token)
+
                             // 跳转到 HealthyActivity
                             val intent = Intent(this@MainActivity, HealthyActivity::class.java)
                             startActivity(intent)
