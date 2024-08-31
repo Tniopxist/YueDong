@@ -49,6 +49,7 @@ dependencies {
     implementation ("com.squareup.retrofit2:retrofit:2.9.0")
     // Retrofit转换器
     implementation ("com.squareup.retrofit2:converter-moshi:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
     // 高德3d地图
     implementation ("com.amap.api:3dmap:latest.integration")
     // 可视化图表
