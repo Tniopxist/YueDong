@@ -7,7 +7,7 @@
     android:background="#ECECEC"
     android:orientation="vertical"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".HealthConditionActivity">
+    tools:context=".SettingActivity">
 
     <!--顶部导航栏-->
     <RelativeLayout
