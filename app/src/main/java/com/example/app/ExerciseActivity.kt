@@ -1,6 +1,7 @@
 package com.example.app
 
 import android.Manifest
+import android.app.AlertDialog
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
@@ -32,19 +33,27 @@ import com.amap.api.maps.CameraUpdateFactory
 import com.amap.api.maps.MapView
 import com.amap.api.maps.MapsInitializer
 import com.amap.api.maps.UiSettings
-import com.amap.api.maps.model.BitmapDescriptorFactory
 import com.amap.api.maps.model.LatLng
-import com.amap.api.maps.model.MyLocationStyle
 import com.amap.api.maps.model.PolylineOptions
+import com.example.app.http.MyToken
+import com.example.app.http.RecordService
+import com.example.app.model.InsertExerciseRequest
+import com.example.app.model.InsertExerciseResponse
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import java.sql.Types.NULL
+import java.time.Instant
+
 
 class ExerciseActivity : AppCompatActivity() ,AMapLocationListener{
     private var mMapView : MapView? = null
-    private lateinit var aMap: AMap
-    private lateinit var locationClient: AMapLocationClient
+    private var aMap: AMap? = null
+    private var locationClient: AMapLocationClient? = null
     private val pathPoints = mutableListOf<LatLng>()
     private var shouldDrawPath = false  // 用于控制是否绘制路径和累加距离
     // 用于存储前一个点和当前点
@@ -63,11 +72,13 @@ class ExerciseActivity : AppCompatActivity() ,AMapLocationListener{
     private var isstarting = false  //是否在运动中
     private var isRunning = false   // 是否正在运动
 
-    private var elapsedTime = 0L    // 时间
+    private var elapsedTime = 0    // 时间
     private var mile = 0F    // 里程
     private var speed = 0F   // 配速
-    private var hb = 0F      // 心率
+    private var hb = 0      // 心率
     private var energy = 0F  // 耗能
+    private var starttime = ""  // 开始时间
+    private var endtime = ""   // 结束时间
 
     private val handler = Handler(Looper.getMainLooper())
     private lateinit var runnable: Runnable
@@ -106,7 +117,8 @@ class ExerciseActivity : AppCompatActivity() ,AMapLocationListener{
     override fun onDestroy() {
         super.onDestroy()
         mMapView!!.onDestroy()
-        locationClient.onDestroy()
+        aMap?.clear()
+        locationClient?.onDestroy()
         scope.cancel()
     }
 
@@ -139,10 +151,10 @@ class ExerciseActivity : AppCompatActivity() ,AMapLocationListener{
 
         // 获取地图对象
         aMap = mMapView!!.getMap();
-        aMap.mapType = AMap.MAP_TYPE_NORMAL  // 使用标准地图模式
+        aMap?.mapType = AMap.MAP_TYPE_NORMAL  // 使用标准地图模式
 
         // 地图其他设置 指南标识 比例尺
-        val mUiSettings: UiSettings = aMap.getUiSettings()
+        val mUiSettings: UiSettings = aMap!!.getUiSettings()
         mUiSettings.setCompassEnabled(true)
         mUiSettings.setScaleControlsEnabled(true)
 
@@ -165,7 +177,7 @@ class ExerciseActivity : AppCompatActivity() ,AMapLocationListener{
                 Toast.makeText(this, "请开启定位服务", Toast.LENGTH_SHORT).show()
             }
             // 已授予权限，初始化定位客户端
-            aMap.isMyLocationEnabled = true
+            aMap!!.isMyLocationEnabled = true
             initLocationClient()
         }
 
@@ -210,6 +222,9 @@ class ExerciseActivity : AppCompatActivity() ,AMapLocationListener{
             // 还未开始运动
             if(!isstarting){
                 isstarting = true
+                Log.d("Star_btn:", "start")
+                starttime = Instant.now().toString()
+                Log.d("Starttime:", starttime)
                 val end: LinearLayout = findViewById(R.id.end)
                 end.setVisibility(View.VISIBLE)
 //                pathPoints.clear()
@@ -245,11 +260,11 @@ class ExerciseActivity : AppCompatActivity() ,AMapLocationListener{
             isOnceLocationLatest = true // 获取最近的定位结果
             isNeedAddress = false // 需要地址信息
         }
-        aMap.isMyLocationEnabled = true
-        aMap.animateCamera(CameraUpdateFactory.zoomTo(19F))     //地图精确度3~19F
+        aMap!!.isMyLocationEnabled = true
+        aMap!!.animateCamera(CameraUpdateFactory.zoomTo(19F))     //地图精确度3~19F
 
-        locationClient.setLocationOption(locationOption)    // 设置定位参数
-        locationClient.setLocationListener(this)    // 设置定位监听
+        locationClient!!.setLocationOption(locationOption)    // 设置定位参数
+        locationClient!!.setLocationListener(this)    // 设置定位监听
 
     }
 
@@ -282,38 +297,92 @@ class ExerciseActivity : AppCompatActivity() ,AMapLocationListener{
 
         // 记录数据
         recordEx()
-        // 重置数据
-        elapsedTime = 0L
-        mile = 0F
-        speed = 0F
-        hb = 0F
-        energy = 0F
-
-        shouldDrawPath = false
-        lastPoint = null
-        currentPoint = null
-
-        aMap.clear()
-        pathPoints.clear()
-        aMap.isMyLocationEnabled = true
-        aMap.animateCamera(CameraUpdateFactory.zoomTo(19F))
     }
 
     // 运动记录
     private fun recordEx(){
-//        elapsedTime,mile,speed,hb,energy
-        // 弹窗提示
-        Toast.makeText(this, "time:"+elapsedTime+"\nmile:"+mile+"\nspeed:"+speed+"\nhb:"+hb+"\nenergy"+energy, Toast.LENGTH_LONG).show();
+        endtime = Instant.now().toString()
+        Log.d("Endtime:", endtime)
 
-        // 更新面板数据
-        handler.postDelayed( Runnable() {
-            run() {
-                updateInfo()
-            }
-        }, 1000);//延时1s
+        CoroutineScope(Dispatchers.Main).launch {
+            InsertRecords()
+            // 重置数据
+//            elapsedTime = 0
+//            mile = 0F
+//            speed = 0F
+//            hb = 0
+//            energy = 0F
+//            starttime = ""
+//            endtime = ""
+//
+//            shouldDrawPath = false
+//            lastPoint = null
+//            currentPoint = null
+//
+//            aMap!!.clear()
+//            pathPoints.clear()
+//            aMap!!.isMyLocationEnabled = true
+//            aMap!!.animateCamera(CameraUpdateFactory.zoomTo(19F))
+//            updateInfo()
+        }
 
 
     }
+
+    private suspend fun InsertRecords() {
+        val retrofit = MyToken(this).retrofit
+
+        val service = retrofit.create(RecordService::class.java)
+
+        val insertExerciseRequest = InsertExerciseRequest(0,hb,0,energy,
+            endtime,1000F,elapsedTime,endtime,"running",0,"",0,starttime,0,endtime)
+
+        Log.i("insertExerciseRequest:",insertExerciseRequest.toString())
+
+        val call: Call<InsertExerciseResponse> = service.insertExerciseRecord(insertExerciseRequest)
+        call.enqueue(object : Callback<InsertExerciseResponse> {
+            override fun onResponse(call: Call<InsertExerciseResponse>, response: Response<InsertExerciseResponse>) {
+                if (response.isSuccessful()) {
+                    val insertExerciseResponse: InsertExerciseResponse? = response.body()
+                    // 处理响应数据
+                    if (insertExerciseResponse != null) {
+                        // 根据 code 值判断处理逻辑
+                        if (insertExerciseResponse.code == 1) {
+                            showAlertDialog("新增记录："+String.format("%02d:%02d:%02d", elapsedTime / 3600, (elapsedTime % 3600) / 60, elapsedTime % 60))
+                            // 重置数据
+                            elapsedTime = 0
+                            mile = 0F
+                            speed = 0F
+                            hb = 0
+                            energy = 0F
+                            starttime = ""
+                            endtime = ""
+
+                            shouldDrawPath = false
+                            lastPoint = null
+                            currentPoint = null
+
+                            aMap!!.clear()
+                            pathPoints.clear()
+                            aMap!!.isMyLocationEnabled = true
+                            aMap!!.animateCamera(CameraUpdateFactory.zoomTo(19F))
+                            updateInfo()
+                        } else {
+                            showAlertDialog(insertExerciseResponse.message)
+                        }
+                        Log.d("InsertExercise", "Response: " + insertExerciseResponse.toString())
+                    }
+                } else {
+                    Log.e("InsertExercise", "请求失败: " + response.message())
+                }
+            }
+
+            override fun onFailure(call: Call<InsertExerciseResponse>, t: Throwable?) {
+                Log.e("InsertExercise", "网络请求失败: ", t)
+            }
+        })
+    }
+
 
 
     // 开始绘制轨迹
@@ -322,7 +391,7 @@ class ExerciseActivity : AppCompatActivity() ,AMapLocationListener{
 //        scope.launch {
 //            locationClient.startLocation() // 在后台线程启动定位
 //        }
-        locationClient.startLocation()
+        locationClient!!.startLocation()
     }
 
     // 暂停绘制轨迹
@@ -331,7 +400,7 @@ class ExerciseActivity : AppCompatActivity() ,AMapLocationListener{
 //        scope.launch {
 //            locationClient.stopLocation() // 在后台线程暂停定位
 //        }
-        locationClient.stopLocation()
+        locationClient!!.stopLocation()
 
     }
 
@@ -374,10 +443,10 @@ class ExerciseActivity : AppCompatActivity() ,AMapLocationListener{
             .color(Color.BLUE)
 
         // 添加到地图
-        aMap.addPolyline(polylineOptions)
+        aMap!!.addPolyline(polylineOptions)
 
-        aMap.isMyLocationEnabled = true
-        aMap.animateCamera(CameraUpdateFactory.newLatLngZoom(to, 19F))
+        aMap!!.isMyLocationEnabled = true
+        aMap!!.animateCamera(CameraUpdateFactory.newLatLngZoom(to, 19F))
     }
 
 
@@ -395,17 +464,31 @@ class ExerciseActivity : AppCompatActivity() ,AMapLocationListener{
 
         useTime.text = String.format("%02d:%02d:%02d", hours, minutes, seconds)
 
-        if(mile >1000){
-            val km = mile / 1000
-            speed = (km / (elapsedTime.toFloat() / 3600.0 )).toFloat()
-            runMile.text = String.format("%.1f", km)+"km"
+        if(elapsedTime == 0){
+            runMile.text = "0km"
+            speed = 0F
         }else{
-            speed = ( mile / (elapsedTime.toFloat() / 3.6 )).toFloat()
-            runMile.text = String.format("%.1f", mile)+"m"
+            if(mile >1000){
+                val km = mile / 1000
+                speed = (km / (elapsedTime.toFloat() / 3600.0 )).toFloat()
+                runMile.text = String.format("%.1f", km)+"km"
+            }else{
+                speed = ( mile / (elapsedTime.toFloat() / 3.6 )).toFloat()
+                runMile.text = String.format("%.1f", mile)+"m"
+            }
         }
+
         runSpeed.text = speed.toString() + "km/h"
         heartBeat.text = hb.toString() + "bpm"
         runEnergy.text = energy.toString() + "kcal"
 
+    }
+
+    private fun showAlertDialog(message: String) {
+        AlertDialog.Builder(this)
+            .setTitle("提示")
+            .setMessage(message)
+            .setPositiveButton("确定", null)
+            .show()
     }
 }
