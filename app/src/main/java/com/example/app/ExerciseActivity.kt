@@ -46,7 +46,6 @@ import kotlinx.coroutines.launch
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.sql.Types.NULL
 import java.time.Instant
 
 
@@ -335,7 +334,7 @@ class ExerciseActivity : AppCompatActivity() ,AMapLocationListener{
         val service = retrofit.create(RecordService::class.java)
 
         val insertExerciseRequest = InsertExerciseRequest(0,hb,0,energy,
-            endtime,1000F,elapsedTime,endtime,"running",0,"",0,starttime,0,endtime)
+            endtime,mile,elapsedTime,endtime,"running",0,"",0,starttime,0,endtime)
 
         Log.i("insertExerciseRequest:",insertExerciseRequest.toString())
 
@@ -478,10 +477,33 @@ class ExerciseActivity : AppCompatActivity() ,AMapLocationListener{
             }
         }
 
-        runSpeed.text = speed.toString() + "km/h"
-        heartBeat.text = hb.toString() + "bpm"
-        runEnergy.text = energy.toString() + "kcal"
+        energy = calculateCaloriesBurned(elapsedTime, mile, 65F)
 
+        runSpeed.text = String.format("%.2f", speed)+ "km/h"
+        heartBeat.text = hb.toString() + "bpm"
+        runEnergy.text = String.format("%.2f", energy)+ "kcal"
+
+    }
+
+    private fun calculateCaloriesBurned(timeInSeconds: Int, distanceInKm: Float, weightInKg: Float): Float {
+        // 计算速度
+        val speedInKmH = distanceInKm / (timeInSeconds / 3600.0)
+
+        // 根据速度选择 MET 值
+        val metValue = when {
+            speedInKmH <= 8.0F -> 8.3F
+            speedInKmH <= 9.7F -> 9.8F
+            speedInKmH <= 11.3F -> 11.4F
+            speedInKmH <= 12.9F -> 12.8F
+            speedInKmH <= 14.5F -> 14.5F
+            else -> 16.0F
+        }
+
+        // 计算时间（小时）
+        val timeInHours = timeInSeconds / 3600F
+
+        // 计算消耗的卡路里
+        return metValue * weightInKg * timeInHours
     }
 
     private fun showAlertDialog(message: String) {
