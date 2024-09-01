@@ -1,6 +1,7 @@
 package com.example.app
 
 import android.app.AlertDialog
+import android.graphics.BitmapFactory
 import android.os.Bundle
 import android.util.Log
 import android.view.Gravity
@@ -9,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import com.example.app.data.UserDistanceData
 import com.example.app.data.UserDistanceRankData
 import com.example.app.http.MyToken
 import com.example.app.http.RankService
@@ -18,12 +20,13 @@ import com.google.gson.Gson
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
+import java.net.HttpURLConnection
+import java.net.URL
 import java.time.Instant
+import kotlin.concurrent.thread
 
 class RankActivity : AppCompatActivity() {
-    lateinit var list:UserDistanceRankData
+    lateinit var list:List<UserDistanceData>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,11 +94,11 @@ class RankActivity : AppCompatActivity() {
             var id = ""
             var distance = ""
 
-            if(list.userDistanceData.size >= i){
-                nickname = list.userDistanceData.get(i-1).nickName
-                img = list.userDistanceData.get(i-1).headerImg
-                id = list.userDistanceData.get(i-1).userId.toString()
-                distance = list.userDistanceData.get(i-1).distance.toString()
+            if(list.size >= i){
+                nickname = list.get(i-1).nickName
+                img = list.get(i-1).headerImg
+                id = list.get(i-1).userId.toString()
+                distance = list.get(i-1).distance.toString()
             }
 
             val dataRow = createRow(
@@ -181,28 +184,27 @@ class RankActivity : AppCompatActivity() {
             var distance3 :String= ""
 
 
-            if(list.userDistanceData.size > 0 ) {
+            if(list.size > 0 ) {
                 //获取前三名数据
-                nickname1 = list.userDistanceData.get(0).nickName
-                img1 = list.userDistanceData.get(0).headerImg
-                id1 = list.userDistanceData.get(0).userId.toString()
-                distance1 = list.userDistanceData.get(0).distance.toString()
+                nickname1 = list.get(0).nickName
+                img1 = list.get(0).headerImg
+                id1 = list.get(0).userId.toString()
+                distance1 = list.get(0).distance.toString() + "km"
 
-                if (list.userDistanceData.size > 1) {
-                    nickname2 = list.userDistanceData.get(1).nickName
-                    img2 = list.userDistanceData.get(1).headerImg
-                    id2 = list.userDistanceData.get(1).userId.toString()
-                    distance2 = list.userDistanceData.get(1).distance.toString()
+                if (list.size > 1) {
+                    nickname2 = list.get(1).nickName
+                    img2 = list.get(1).headerImg
+                    id2 = list.get(1).userId.toString()
+                    distance2 = list.get(1).distance.toString() + "km"
 
-                    if (list.userDistanceData.size > 2) {
-                        nickname3 = list.userDistanceData.get(2).nickName
-                        img3 = list.userDistanceData.get(2).headerImg
-                        id3 = list.userDistanceData.get(2).userId.toString()
-                        distance3 = list.userDistanceData.get(2).distance.toString()
+                    if (list.size > 2) {
+                        nickname3 = list.get(2).nickName
+                        img3 = list.get(2).headerImg
+                        id3 = list.get(2).userId.toString()
+                        distance3 = list.get(2).distance.toString() + "km"
                     }
                 }
             }
-
 
             // 第二名
             addView(createPodiumItem("2", img2,nickname2, id2, distance2, heightMultiplier = 0.65f))
@@ -252,31 +254,35 @@ class RankActivity : AppCompatActivity() {
                 }
             }
 
-            // 昵称
-            val nicknameTextView = TextView(this@RankActivity).apply {
-                text = nickname
-                textSize = 20f
-                gravity = Gravity.CENTER
-            }
+//            // 昵称
+//            val nicknameTextView = TextView(this@RankActivity).apply {
+//                text = nickname
+//                textSize = 20f
+//                gravity = Gravity.CENTER
+//            }
 
-            // 里程
+            // id
             val data1TextView = TextView(this@RankActivity).apply {
                 text = data1
                 textSize = 18f
                 gravity = Gravity.CENTER
             }
 
-            // 时长
+            // 距离
             val data2TextView = TextView(this@RankActivity).apply {
                 text = data2
                 textSize = 12f
                 gravity = Gravity.CENTER
             }
 
+            if (avatar != null) {
+                getImg(avatar,avatarImageView)
+            }
+
             // 按顺序添加各个元素到当前奖台项
             addView(rankTextView)
             addView(avatarImageView)
-            addView(nicknameTextView)
+//            addView(nicknameTextView)
             addView(data1TextView)
             addView(data2TextView)
         }
@@ -328,19 +334,19 @@ class RankActivity : AppCompatActivity() {
                 }
             }
 
-            // 昵称
-            val nicknameTextView = TextView(this@RankActivity).apply {
-                text = nickname
-                textSize = if (isTitle) 20f else 18f
-                layoutParams = LinearLayout.LayoutParams(
-                    0,
-                    LinearLayout.LayoutParams.WRAP_CONTENT,
-                    2f
-                ).apply {
-                    setMargins(8, 0, 8, 0)
-                }
-                if (isTitle) setBold(this)
-            }
+//            // 昵称
+//            val nicknameTextView = TextView(this@RankActivity).apply {
+//                text = nickname
+//                textSize = if (isTitle) 20f else 18f
+//                layoutParams = LinearLayout.LayoutParams(
+//                    0,
+//                    LinearLayout.LayoutParams.WRAP_CONTENT,
+//                    2f
+//                ).apply {
+//                    setMargins(8, 0, 8, 0)
+//                }
+//                if (isTitle) setBold(this)
+//            }
 
             // 里程
             val data1TextView = TextView(this@RankActivity).apply {
@@ -373,7 +379,7 @@ class RankActivity : AppCompatActivity() {
             // 将元素添加到当前行
             addView(rankTextView)
             addView(avatarImageView)
-            addView(nicknameTextView)
+//            addView(nicknameTextView)
             addView(data1TextView)
             addView(data2TextView)
         }
@@ -402,7 +408,17 @@ class RankActivity : AppCompatActivity() {
                         // 根据 code 值判断处理逻辑
                         if (rankResponse.code == 1) {
                             if(rankResponse.data.list != null){
-                                list = Gson().fromJson(rankResponse.data.list,UserDistanceRankData::class.java)
+//                                list = Gson().fromJson(rankResponse.data.list,UserDistanceRankData::class.java)
+                                list = rankResponse.data.list
+
+//                                for (item in list){
+//                                    println("rank:"+item.rank)
+//                                    println("userId:"+item.userId)
+//                                    println("nickName:"+item.nickName)
+//                                    println("headerImg:"+item.headerImg)
+//                                    println("distance:"+item.distance)
+//                                }
+
                                 // 当数据成功获取后，初始化 UI
                                 setupUI()
                             }else{
@@ -423,6 +439,32 @@ class RankActivity : AppCompatActivity() {
                 Log.e("RankList", "网络请求失败: ", t)
             }
         })
+    }
+
+    private fun getImg(string: String,iv:ImageView) {
+        val url = "http://101.42.43.59:8888/" + string
+
+        // 使用新线程执行网络操作
+        thread {
+            try {
+                val url = URL(url)
+                val connection = url.openConnection() as HttpURLConnection
+                connection.doInput = true
+                connection.connect()
+
+                val inputStream = connection.inputStream
+                val bitmap = BitmapFactory.decodeStream(inputStream)
+
+                // 在主线程更新UI
+                runOnUiThread {
+                    iv.setImageBitmap(bitmap)
+                }
+
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+
     }
 
 
