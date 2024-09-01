@@ -7,6 +7,6 @@ import retrofit2.http.Body;
 import retrofit2.http.POST;
 
 public interface RankService {
-    @POST("/rank/get_rank_list")
+    @POST("/rank/get_distance_rank")
     fun getRankList(@Body insertExerciseRequest: RankRequest?): Call<RankResponse>
 }
