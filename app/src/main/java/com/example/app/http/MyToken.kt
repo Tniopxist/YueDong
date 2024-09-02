@@ -38,5 +38,4 @@ class MyToken(private val context: Context) {
         .client(okHttpClient)
         .addConverterFactory(MoshiConverterFactory.create())
         .build()
-
 }

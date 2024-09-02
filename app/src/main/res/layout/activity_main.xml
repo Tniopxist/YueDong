@@ -31,8 +31,8 @@
         android:hint="请输入邮箱号"
         android:maxLines="1"
         android:padding="30px"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
+        android:textColor="#000000"
+        android:textSize="20sp"
         tools:layout_editor_absoluteX="79dp"
         tools:layout_editor_absoluteY="363dp" />
 
@@ -42,11 +42,11 @@
         android:layout_height="74dp"
         android:layout_gravity="center"
         android:hint="请输入密码"
-        android:padding="30px"
-        android:maxLines="1"
         android:inputType="textPassword"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
+        android:maxLines="1"
+        android:padding="30px"
+        android:textColor="#000000"
+        android:textSize="20sp"
         tools:layout_editor_absoluteX="79dp"
         tools:layout_editor_absoluteY="363dp" />
 
