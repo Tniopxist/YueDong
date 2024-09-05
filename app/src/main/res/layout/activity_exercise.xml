@@ -40,22 +40,22 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
 
             <LinearLayout
                 android:layout_width="375dp"
                 android:layout_height="130dp"
+                android:layout_margin="50dp"
                 android:background="@drawable/radius_shape"
                 android:elevation="1dp"
-                android:orientation="horizontal"
-                android:layout_margin="50dp">
+                android:orientation="horizontal">
 
 
                 <LinearLayout
-                    android:layout_width="118dp"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="4"
                     android:orientation="vertical">
 
                     <TextView
@@ -70,14 +70,15 @@
                         android:id="@+id/UseTime"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:gravity="center"
                         android:text="00:00:00"
-                        android:textSize="22dp"
-                        android:gravity="center"/>
+                        android:textSize="22dp" />
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="6"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -92,8 +93,9 @@
                             android:orientation="horizontal">
 
                             <LinearLayout
-                                android:layout_width="92dp"
+                                android:layout_width="0dp"
                                 android:layout_height="match_parent"
+                                android:layout_weight="50"
                                 android:orientation="vertical">
 
                                 <TextView
@@ -113,14 +115,11 @@
                             </LinearLayout>
 
                             <LinearLayout
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="match_parent"
+                                android:layout_weight="50"
                                 android:orientation="vertical">
 
-                                <LinearLayout
-                                    android:layout_width="92dp"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical">
 
                                     <TextView
                                         android:id="@+id/runSpeedDescription"
@@ -136,7 +135,7 @@
                                         android:layout_weight="1"
                                         android:gravity="center"
                                         android:text="0km/h" />
-                                </LinearLayout>
+
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -158,14 +157,11 @@
                             android:orientation="horizontal">
 
                             <LinearLayout
-                                android:layout_width="92dp"
+                                android:layout_width="0dp"
                                 android:layout_height="match_parent"
+                                android:layout_weight="50"
                                 android:orientation="vertical">
 
-                                <LinearLayout
-                                    android:layout_width="92dp"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical">
 
                                     <TextView
                                         android:id="@+id/heartBeatDiscribe"
@@ -182,17 +178,13 @@
                                         android:gravity="center"
                                         android:text="0bpm" />
                                 </LinearLayout>
-                            </LinearLayout>
 
                             <LinearLayout
-                                android:layout_width="match_parent"
+                                android:layout_width="0dp"
                                 android:layout_height="match_parent"
+                                android:layout_weight="50"
                                 android:orientation="vertical">
 
-                                <LinearLayout
-                                    android:layout_width="92dp"
-                                    android:layout_height="match_parent"
-                                    android:orientation="vertical">
 
                                     <TextView
                                         android:id="@+id/runEnergyDiscribe"
@@ -208,7 +200,7 @@
                                         android:layout_weight="1"
                                         android:gravity="center"
                                         android:text="0kcal" />
-                                </LinearLayout>
+
                             </LinearLayout>
                         </LinearLayout>
                     </LinearLayout>
@@ -262,7 +254,7 @@
             <com.amap.api.maps.MapView
                 android:id="@+id/map"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
 
             <LinearLayout
                 android:id="@+id/end"
@@ -290,8 +282,6 @@
         </RelativeLayout>
 
 
-
-
     </LinearLayout>
 
 
@@ -306,8 +296,9 @@
 
         <LinearLayout
             android:id="@+id/navHealth"
-            android:layout_width="136dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="33"
             android:orientation="vertical">
 
             <ImageView
@@ -328,8 +319,9 @@
 
         <LinearLayout
             android:id="@+id/navExercise"
-            android:layout_width="137dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="33"
             android:background="#DDDDDD"
             android:orientation="vertical">
 
@@ -353,8 +345,9 @@
 
         <LinearLayout
             android:id="@+id/navSetting"
-            android:layout_width="139dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="33"
             android:orientation="vertical">
 
 

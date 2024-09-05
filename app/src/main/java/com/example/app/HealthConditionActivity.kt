@@ -12,6 +12,7 @@ import android.text.style.StyleSpan
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -130,6 +131,13 @@ class HealthConditionActivity : AppCompatActivity() {
 //        CoroutineScope(Dispatchers.Main).launch {
 //            getHealthStatusList()
 //        }
+
+
+        // 添加退出按钮的点击事件监听器
+        findViewById<ImageView>(R.id.exit).setOnClickListener {
+            finish() // 关闭当前Activity，返回上一个Activity
+        }
+
     }
 
     private fun showInputDialog() {
