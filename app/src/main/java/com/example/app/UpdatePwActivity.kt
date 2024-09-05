@@ -1,8 +1,11 @@
 package com.example.app
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
+import android.view.MotionEvent
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageView
@@ -10,6 +13,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.app.http.MyToken
@@ -18,11 +22,13 @@ import com.example.app.model.GetUserRequest
 import com.example.app.model.GetUserResponse
 import com.example.app.model.UpdatePWRequest
 import com.example.app.model.UpdatePWResponse
+import com.example.app.util.DrawableUtils
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
 class UpdatePwActivity : AppCompatActivity() {
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -54,6 +60,52 @@ class UpdatePwActivity : AppCompatActivity() {
             finish()
         }
 
+
+        val drawable = ContextCompat.getDrawable(this, R.drawable.ic_visibility_off) ?: return
+        val scaledDrawable = DrawableUtils.scaleDrawable(this, drawable, 24, 24)
+        findViewById<EditText>(R.id.et_new_password).setCompoundDrawablesWithIntrinsicBounds(null, null, scaledDrawable, null)
+        val editText = findViewById<EditText>(R.id.et_new_password)
+        val drawableRight = editText.compoundDrawables[2] // 右侧Drawable
+        editText.setOnTouchListener { v, event ->
+            if (event.action == MotionEvent.ACTION_UP) {
+                if (drawableRight != null) {
+                    val drawableWidth = drawableRight.intrinsicWidth
+                    val touchX = event.x.toInt()
+                    if (touchX >= (editText.width - drawableWidth) && touchX <= editText.width) {
+                        if (editText.inputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD) {
+                            editText.setInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD)
+                        } else {
+                            editText.setInputType(InputType.TYPE_CLASS_TEXT or  InputType.TYPE_TEXT_VARIATION_PASSWORD)
+                        }
+                        editText.setSelection(editText.text.length)
+                        return@setOnTouchListener true
+                    }
+                }
+            }
+            return@setOnTouchListener false
+        }
+
+        findViewById<EditText>(R.id.et_old_password).setCompoundDrawablesWithIntrinsicBounds(null, null, scaledDrawable, null)
+        val editText1 = findViewById<EditText>(R.id.et_old_password)
+        val drawableRight1 = editText.compoundDrawables[2] // 右侧Drawable
+        editText1.setOnTouchListener { v, event ->
+            if (event.action == MotionEvent.ACTION_UP) {
+                if (drawableRight1 != null) {
+                    val drawableWidth = drawableRight1.intrinsicWidth
+                    val touchX = event.x.toInt()
+                    if (touchX >= (editText1.width - drawableWidth) && touchX <= editText1.width) {
+                        if (editText1.inputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD) {
+                            editText1.setInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD)
+                        } else {
+                            editText1.setInputType(InputType.TYPE_CLASS_TEXT or  InputType.TYPE_TEXT_VARIATION_PASSWORD)
+                        }
+                        editText1.setSelection(editText1.text.length) // 将光标移到文本末尾
+                        return@setOnTouchListener true
+                    }
+                }
+            }
+            return@setOnTouchListener false
+        }
     }
 
     private fun updatePw(newPassword:String,oldPassword:String){

@@ -1,31 +1,40 @@
 package com.example.app
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.graphics.drawable.BitmapDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.text.InputType
 import android.util.Log
+import android.view.MotionEvent
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import com.example.app.http.BaseService
 import com.example.app.model.EmailRequest
 import com.example.app.model.EmailResponse
-import com.example.app.http.BaseService
 import com.example.app.model.RegisterRequest
 import com.example.app.model.RegisterResponse
+import com.example.app.util.DrawableUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Call
-import retrofit2.Retrofit
-import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.Callback
 import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.moshi.MoshiConverterFactory
 
 
 class RegisterActivity : AppCompatActivity() {
@@ -33,6 +42,7 @@ class RegisterActivity : AppCompatActivity() {
     private var countdownTime = 60
     private val updateInterval = 1000L // 1s
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -62,6 +72,31 @@ class RegisterActivity : AppCompatActivity() {
             CoroutineScope(Dispatchers.Main).launch {
                 registerWithCode()
             }
+        }
+
+        val drawable = ContextCompat.getDrawable(this, R.drawable.ic_visibility_off) ?: return
+        val scaledDrawable = DrawableUtils.scaleDrawable(this, drawable, 24, 24)
+        findViewById<EditText>(R.id.registerPwd).setCompoundDrawablesWithIntrinsicBounds(null, null, scaledDrawable, null)
+
+        val editText = findViewById<EditText>(R.id.registerPwd)
+        val drawableRight = editText.compoundDrawables[2] // 右侧Drawable
+        editText.setOnTouchListener { v, event ->
+            if (event.action == MotionEvent.ACTION_UP) {
+                if (drawableRight != null) {
+                    val drawableWidth = drawableRight.intrinsicWidth
+                    val touchX = event.x.toInt()
+                    if (touchX >= (editText.width - drawableWidth) && touchX <= editText.width) {
+                        if (editText.inputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD) {
+                            editText.setInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD)
+                        } else {
+                            editText.setInputType(InputType.TYPE_CLASS_TEXT or  InputType.TYPE_TEXT_VARIATION_PASSWORD)
+                        }
+                        editText.setSelection(editText.text.length)
+                        return@setOnTouchListener true
+                    }
+                }
+            }
+            return@setOnTouchListener false
         }
     }
 
