@@ -489,6 +489,11 @@ class ExerciseActivity : AppCompatActivity() ,AMapLocationListener{
         // 计算速度
         val speedInKmH = distanceInKm / (timeInSeconds / 3600.0)
 
+        // 如果速度为0，返回卡路里消耗为0
+        if (speedInKmH == 0.0) {
+            return 0.0F
+        }
+
         // 根据速度选择 MET 值
         val metValue = when {
             speedInKmH <= 8.0F -> 8.3F
