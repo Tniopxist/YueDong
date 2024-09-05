@@ -45,12 +45,15 @@ class SettingActivity : AppCompatActivity() {
 
         getUserInfo()
 
-//        findViewById<TextView>(R.id.exit).setOnClickListener {
-//            finishAffinity() // 关闭所有Activity
-//            System.exit(0)   // 结束进程，完全退出应用程序
-//        }
+        findViewById<ImageView>(R.id.exit).setOnClickListener {
+            finishAffinity() // 关闭所有Activity
+            System.exit(0)   // 结束进程，完全退出应用程序
+        }
 
-        findViewById<TextView>(R.id.toMyself).setOnClickListener { startActivity(Intent(this,MyselfActivity::class.java)) }
+        findViewById<TextView>(R.id.toMyself).setOnClickListener {
+            val intent = Intent(this, MyselfActivity::class.java)
+            startActivity(intent)
+        }
 
         findViewById<LinearLayout>(R.id.navHealth).setOnClickListener { startActivity(Intent(this,HealthyActivity::class.java)) }
         findViewById<LinearLayout>(R.id.navExercise).setOnClickListener { startActivity(Intent(this,ExerciseActivity::class.java)) }

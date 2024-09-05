@@ -47,9 +47,9 @@ class MyselfActivity : AppCompatActivity() {
             updateUserInfo()
         }
 
-//        findViewById<Button>(R.id.exit).setOnClickListener{
-//            finish()
-//        }
+        findViewById<ImageView>(R.id.exitmyself).setOnClickListener{
+            finish()
+        }
 
     }
 
@@ -114,7 +114,9 @@ class MyselfActivity : AppCompatActivity() {
                     if (updateUserResponse != null) {
                         // 根据 code 值判断处理逻辑
                         if (updateUserResponse.code == 1) {
-                            showAlertDialog(response.message())
+                            if (!isFinishing && !isDestroyed) {
+                                showAlertDialog(response.message())
+                            }
                         }
                         Log.d("UpdateUserResponse", "Response: " + updateUserResponse.toString())
                     }
