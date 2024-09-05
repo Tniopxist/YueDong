@@ -1,5 +1,6 @@
 package com.example.app
 
+import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
@@ -8,7 +9,9 @@ import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
 import android.text.style.StyleSpan
+import android.util.Log
 import android.widget.Button
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -17,6 +20,17 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.app.data.HeartBeatData
 import com.example.app.data.HeightWeightData
+import com.example.app.http.BloodPressureService
+import com.example.app.http.HealthService
+import com.example.app.http.MyToken
+import com.example.app.model.CreateBloodPressureRequest
+import com.example.app.model.CreateBloodPressureResponse
+import com.example.app.model.GetHealthStatusListRequest
+import com.example.app.model.GetHealthStatusListResponse
+import com.example.app.model.GetHealthStatusResponse
+import com.example.app.model.HealthStatusData
+import com.example.app.model.PutHealthStatusRequest
+import com.example.app.model.PutHealthStatusResponse
 import com.example.app.util.DateUtils
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
@@ -25,12 +39,22 @@ import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.time.Duration
 import java.time.Instant
+import java.time.format.DateTimeFormatter
+import java.time.format.DateTimeParseException
 import kotlin.math.pow
 import kotlin.math.round
 
 class HealthConditionActivity : AppCompatActivity() {
+    private lateinit var heightWeightData : List<HeightWeightData>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -41,12 +65,11 @@ class HealthConditionActivity : AppCompatActivity() {
             insets
         }
 
-        drawChart()
         val btnCalBMI = findViewById<Button>(R.id.measure)
         val tvBMI = findViewById<TextView>(R.id.tvBMI)
         btnCalBMI.setOnClickListener{
-            val height = getHeightWeightData().last().height
-            val weight = getHeightWeightData().last().weight
+            val height = findViewById<TextView>(R.id.heightView).text.toString().split("：")[1].toFloat()
+            val weight = findViewById<TextView>(R.id.weightView).text.toString().split("：")[1].toFloat()
             val BMI: Double = 10000 * weight / height.toDouble().pow(2.0)
 
             val (tzzk, color) = when {
@@ -95,6 +118,156 @@ class HealthConditionActivity : AppCompatActivity() {
         findViewById<LinearLayout>(R.id.navHealth).setOnClickListener { startActivity(Intent(this,HealthyActivity::class.java)) }
         findViewById<LinearLayout>(R.id.navExercise).setOnClickListener { startActivity(Intent(this,ExerciseActivity::class.java)) }
         findViewById<LinearLayout>(R.id.navSetting).setOnClickListener { startActivity(Intent(this,SettingActivity::class.java)) }
+
+        findViewById<Button>(R.id.input).setOnClickListener {
+            showInputDialog()
+        }
+
+        CoroutineScope(Dispatchers.Main).launch {
+            getHealthStatus()
+        }
+
+//        CoroutineScope(Dispatchers.Main).launch {
+//            getHealthStatusList()
+//        }
+    }
+
+    private fun showInputDialog() {
+        val heightEditText = EditText(this)
+        heightEditText.hint = "请输入身高（厘米）"
+        val weightEditText = EditText(this)
+        weightEditText.hint = "请输入体重（公斤）"
+
+        val container = LinearLayout(this).apply {
+            orientation = LinearLayout.VERTICAL
+            addView(heightEditText)
+            addView(weightEditText)
+        }
+
+        val dialog = AlertDialog.Builder(this)
+            .setTitle("输入身高体重")
+            .setView(container)
+            .setPositiveButton("确定") { _, _ ->
+                try {
+                    val height = heightEditText.text.toString().toFloat()
+                    val weight = weightEditText.text.toString().toFloat()
+                    if (height != 0F && weight != 0F) {
+                        CoroutineScope(Dispatchers.Main).launch {
+                            putHealthStatus(height, weight)
+                        }
+                    }
+                    findViewById<TextView>(R.id.heightView).setText("身高（cm）：" + height)
+                    findViewById<TextView>(R.id.weightView).setText("体重（kg）：" + weight)
+                } catch (e: NumberFormatException) {
+                    e.printStackTrace()
+                }
+            }
+            .setNegativeButton("取消", null)
+            .create()
+        dialog.show()
+    }
+
+    private suspend fun putHealthStatus(height:Float, weight:Float){
+        val retrofit = MyToken(this).retrofit
+        val service = retrofit.create(HealthService::class.java)
+
+        val currentTimeMillis = System.currentTimeMillis()
+        val id = (currentTimeMillis / 1000).toInt()
+        val putHealthStatusRequest = PutHealthStatusRequest(id,0F,0F,Instant.now().toString(),Instant.now().toString(),0F,0,height,0,Instant.now().toString(),weight)
+        Log.i("putHealthStatus", putHealthStatusRequest.toString())
+
+        val call: Call<PutHealthStatusResponse> = service.putHealthStatus(putHealthStatusRequest)
+        call.enqueue(object : Callback<PutHealthStatusResponse> {
+            override fun onResponse(call: Call<PutHealthStatusResponse>, response: Response<PutHealthStatusResponse>) {
+                if (response.isSuccessful()) {
+                    val putHealthStatusResponse: PutHealthStatusResponse? = response.body()
+                    // 处理响应数据
+                    if (putHealthStatusResponse != null) {
+                        Log.d("putHealthStatus", "Response: " + putHealthStatusResponse.toString())
+                        CoroutineScope(Dispatchers.Main).launch {
+
+                        }
+                    }
+                } else {
+                    Log.e("putHealthStatus", "请求失败: " + response.message())
+                }
+            }
+
+            override fun onFailure(call: Call<PutHealthStatusResponse>, t: Throwable?) {
+                Log.e("putHealthStatus", "网络请求失败: ", t)
+            }
+        })
+    }
+
+    private suspend fun getHealthStatus(){
+        val retrofit = MyToken(this).retrofit
+        val service = retrofit.create(HealthService::class.java)
+
+        val call: Call<GetHealthStatusResponse> = service.getHealthStatus()
+        call.enqueue(object : Callback<GetHealthStatusResponse> {
+            override fun onResponse(call: Call<GetHealthStatusResponse>, response: Response<GetHealthStatusResponse>) {
+                if (response.isSuccessful()) {
+                    val getHealthStatusResponse: GetHealthStatusResponse? = response.body()
+                    // 处理响应数据
+                    if (getHealthStatusResponse != null && getHealthStatusResponse.code==1) {
+                        Log.d("getHealthStatus", "Response: " + getHealthStatusResponse.toString())
+                        findViewById<TextView>(R.id.heightView).setText("身高（cm）：" + getHealthStatusResponse.data.height)
+                        findViewById<TextView>(R.id.weightView).setText("体重（kg）：" + getHealthStatusResponse.data.weight)
+//                        heightWeightData = convertToHeightWeightData(getHealthStatusResponse.data)
+//                        drawChart()
+                    }
+                } else {
+                    Log.e("getHealthStatus", "请求失败: " + response.message())
+                }
+            }
+
+            override fun onFailure(call: Call<GetHealthStatusResponse>, t: Throwable?) {
+                Log.e("getHealthStatus", "网络请求失败: ", t)
+            }
+        })
+    }
+
+    private suspend fun getHealthStatusList(){
+        val retrofit = MyToken(this).retrofit
+        val service = retrofit.create(HealthService::class.java)
+        val getHealthStatusListRequest = GetHealthStatusListRequest(true, null, null, null, 1, 100, null)
+        val call: Call<GetHealthStatusListResponse> = service.getHealthStatusList(getHealthStatusListRequest)
+        call.enqueue(object : Callback<GetHealthStatusListResponse> {
+            override fun onResponse(call: Call<GetHealthStatusListResponse>, response: Response<GetHealthStatusListResponse>) {
+                if (response.isSuccessful()) {
+                    val getHealthStatusListResponse: GetHealthStatusListResponse? = response.body()
+                    // 处理响应数据
+                    if (getHealthStatusListResponse != null) {
+                        Log.d("getHealthStatusList", "Response: " + getHealthStatusListResponse.toString())
+//                        heightWeightData = convertToHeightWeightData(getHealthStatusResponse.data)
+//                        drawChart()
+                    }
+                } else {
+                    Log.e("getHealthStatusList", "请求失败: " + response.message())
+                }
+            }
+
+            override fun onFailure(call: Call<GetHealthStatusListResponse>, t: Throwable?) {
+                Log.e("getHealthStatusList", "网络请求失败: ", t)
+            }
+        })
+    }
+
+    fun convertToHeightWeightData(healthStatusData: HealthStatusData): HeightWeightData {
+        val dateTimeFormatter = DateTimeFormatter.ISO_DATE_TIME
+
+        val timestamp: Instant = try {
+            Instant.parse(healthStatusData.createdAt) // 将 createdAt 转换为 Instant
+        } catch (e: DateTimeParseException) {
+            Instant.now() // 如果转换失败，则使用当前时间
+        }
+
+        return HeightWeightData(
+            height = healthStatusData.height,
+            weight = healthStatusData.weight,
+            timestamp = timestamp,
+            duration = Duration.ZERO // 默认值
+        )
     }
 
     private fun getHeightWeightData() :  List<HeightWeightData> {

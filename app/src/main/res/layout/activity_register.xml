@@ -32,11 +32,12 @@
             android:layout_width="231dp"
             android:layout_height="74dp"
             android:layout_gravity="center"
-            android:layout_marginTop="30dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="0dp"
             android:hint="请输入邮箱号"
             android:maxLines="1"
             android:textColor="#000000"
-            android:textSize="24sp" />
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/code"
@@ -50,31 +51,31 @@
     </LinearLayout>
 
 
-
     <EditText
         android:id="@+id/inputCode"
         android:layout_width="325dp"
         android:layout_height="74dp"
         android:layout_gravity="center"
         android:hint="请输入验证码"
-        android:padding="30px"
-        android:maxLines="1"
         android:inputType="textPassword"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
+        android:maxLines="1"
+        android:padding="30px"
+        android:textColor="#000000"
+        android:textSize="20sp"
         tools:layout_editor_absoluteX="79dp"
         tools:layout_editor_absoluteY="363dp" />
+
     <EditText
         android:id="@+id/registerPwd"
         android:layout_width="325dp"
         android:layout_height="74dp"
         android:layout_gravity="center"
         android:hint="请输入密码"
-        android:padding="30px"
-        android:maxLines="1"
         android:inputType="textPassword"
-        android:textColor="#FFFFFF"
-        android:textSize="24sp"
+        android:maxLines="1"
+        android:padding="30px"
+        android:textColor="#000000"
+        android:textSize="20sp"
         tools:layout_editor_absoluteX="79dp"
         tools:layout_editor_absoluteY="363dp" />
 

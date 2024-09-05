@@ -1,15 +1,19 @@
 package com.example.app
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.text.InputType
 import android.util.Log
+import android.view.MotionEvent
 import android.widget.Button
 import android.widget.EditText
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.amap.api.maps.AMap
@@ -21,6 +25,7 @@ import com.example.app.model.LoginRequest
 import com.example.app.model.LoginResponse
 import com.example.app.model.RegisterRequest
 import com.example.app.model.RegisterResponse
+import com.example.app.util.DrawableUtils
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -31,6 +36,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 
 class MainActivity : AppCompatActivity() {
+    @SuppressLint("ClickableViewAccessibility")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -51,6 +57,32 @@ class MainActivity : AppCompatActivity() {
             CoroutineScope(Dispatchers.Main).launch {
                 loginWithCode()
             }
+        }
+
+
+        val drawable = ContextCompat.getDrawable(this, R.drawable.ic_visibility_off) ?: return
+        val scaledDrawable = DrawableUtils.scaleDrawable(this, drawable, 24, 24)
+        findViewById<EditText>(R.id.logPwd).setCompoundDrawablesWithIntrinsicBounds(null, null, scaledDrawable, null)
+
+        val editText = findViewById<EditText>(R.id.logPwd)
+        val drawableRight = editText.compoundDrawables[2] // 右侧Drawable
+        editText.setOnTouchListener { v, event ->
+            if (event.action == MotionEvent.ACTION_UP) {
+                if (drawableRight != null) {
+                    val drawableWidth = drawableRight.intrinsicWidth
+                    val touchX = event.x.toInt()
+                    if (touchX >= (editText.width - drawableWidth) && touchX <= editText.width) {
+                        if (editText.inputType == InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_PASSWORD) {
+                            editText.setInputType(InputType.TYPE_CLASS_TEXT or InputType.TYPE_TEXT_VARIATION_VISIBLE_PASSWORD)
+                        } else {
+                            editText.setInputType(InputType.TYPE_CLASS_TEXT or  InputType.TYPE_TEXT_VARIATION_PASSWORD)
+                        }
+                        editText.setSelection(editText.text.length)
+                        return@setOnTouchListener true
+                    }
+                }
+            }
+            return@setOnTouchListener false
         }
     }
 
