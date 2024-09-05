@@ -333,8 +333,8 @@ class ExerciseActivity : AppCompatActivity() ,AMapLocationListener{
 
         val service = retrofit.create(RecordService::class.java)
 
-        val insertExerciseRequest = InsertExerciseRequest(0,hb,0,energy,
-            endtime,mile,elapsedTime,endtime,"running",0,"",0,starttime,0,endtime)
+        val insertExerciseRequest = InsertExerciseRequest(0,hb,0F,energy,
+            endtime,mile,elapsedTime,endtime,"running",0F,"",0F,starttime,0,endtime)
 
         Log.i("insertExerciseRequest:",insertExerciseRequest.toString())
 
