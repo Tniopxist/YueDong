@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.Button
 import android.widget.EditText
+import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -69,6 +70,11 @@ class HeartBeatActivity : AppCompatActivity() {
 
         CoroutineScope(Dispatchers.Main).launch {
             getAllHeartRate()
+        }
+
+        // 添加退出按钮的点击事件监听器
+        findViewById<ImageView>(R.id.exit).setOnClickListener {
+            finish() // 关闭当前Activity，返回上一个Activity
         }
     }
 

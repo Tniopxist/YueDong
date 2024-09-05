@@ -67,8 +67,9 @@
 
                     <at.grabner.circleprogress.CircleProgressView
                         android:id="@+id/circleView1"
-                        android:layout_width="110dp"
-                        android:layout_height="110dp"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="33"
                         CircleProgressView:cpv_autoTextSize="true"
                         CircleProgressView:cpv_barWidth="20dp"
                         CircleProgressView:cpv_innerContourSize="0dp"
@@ -85,8 +86,9 @@
 
                     <at.grabner.circleprogress.CircleProgressView
                         android:id="@+id/circleView2"
-                        android:layout_width="110dp"
-                        android:layout_height="110dp"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="33"
                         CircleProgressView:cpv_autoTextSize="true"
                         CircleProgressView:cpv_barWidth="20dp"
                         CircleProgressView:cpv_innerContourSize="0dp"
@@ -103,8 +105,9 @@
 
                     <at.grabner.circleprogress.CircleProgressView
                         android:id="@+id/circleView3"
-                        android:layout_width="110dp"
-                        android:layout_height="110dp"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_weight="33"
                         CircleProgressView:cpv_autoTextSize="true"
                         CircleProgressView:cpv_barWidth="20dp"
                         CircleProgressView:cpv_innerContourSize="0dp"
@@ -127,8 +130,9 @@
                 android:orientation="horizontal">
 
                 <LinearLayout
-                    android:layout_width="113dp"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="33"
                     android:orientation="vertical">
 
                     <TextView
@@ -149,8 +153,9 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="111dp"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="33"
                     android:orientation="vertical">
 
                     <TextView
@@ -172,8 +177,9 @@
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="33"
                     android:orientation="vertical">
 
                     <TextView
@@ -197,7 +203,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="354dp"
+            android:layout_width="match_parent"
             android:layout_height="105dp"
             android:layout_marginTop="20dp"
             android:background="@drawable/radius_shape"
@@ -205,8 +211,9 @@
 
 
             <LinearLayout
-                android:layout_width="263dp"
+                android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="75"
                 android:orientation="horizontal">
 
                 <TextView
@@ -258,8 +265,9 @@
 
             <ImageView
                 android:id="@+id/toDetailPlan"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="25"
                 app:srcCompat="@drawable/set" />
         </LinearLayout>
 
@@ -278,8 +286,9 @@
 
                 <LinearLayout
                     android:id="@+id/ydls"
-                    android:layout_width="163dp"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="50"
                     android:layout_margin="6dp"
                     android:background="@drawable/radius_shape"
                     android:orientation="horizontal"
@@ -305,8 +314,9 @@
 
                 <LinearLayout
                     android:id="@+id/stsz"
-                    android:layout_width="163dp"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="50"
                     android:layout_margin="6dp"
                     android:background="@drawable/radius_shape"
                     android:orientation="horizontal"
@@ -338,8 +348,9 @@
 
                 <LinearLayout
                     android:id="@+id/xyjc"
-                    android:layout_width="163dp"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="50"
                     android:layout_margin="6dp"
                     android:background="@drawable/radius_shape"
                     android:orientation="horizontal"
@@ -365,8 +376,9 @@
 
                 <LinearLayout
                     android:id="@+id/xljc"
-                    android:layout_width="163dp"
+                    android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_weight="50"
                     android:layout_margin="6dp"
                     android:background="@drawable/radius_shape"
                     android:orientation="horizontal"
@@ -407,8 +419,9 @@
 
         <LinearLayout
             android:id="@+id/navHealth"
-            android:layout_width="136dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="33"
             android:background="#DDDDDD"
             android:orientation="vertical">
 
@@ -430,8 +443,9 @@
 
         <LinearLayout
             android:id="@+id/navExercise"
-            android:layout_width="137dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="33"
             android:orientation="vertical">
 
 
@@ -454,8 +468,9 @@
 
         <LinearLayout
             android:id="@+id/navSetting"
-            android:layout_width="139dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="33"
             android:orientation="vertical">
 
 

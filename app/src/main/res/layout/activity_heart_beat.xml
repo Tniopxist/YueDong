@@ -27,6 +27,20 @@
             android:textSize="25sp"
             android:textStyle="bold" />
 
+        <ImageView
+            android:id="@+id/exit"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+
+            android:layout_alignParentRight="true"
+
+            android:layout_marginStart="8dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginBottom="12dp"
+            app:srcCompat="@drawable/exit" />
 
 
     </RelativeLayout>
@@ -94,8 +108,9 @@
 
         <LinearLayout
             android:id="@+id/navHealth"
-            android:layout_width="136dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="33"
             android:orientation="vertical">
 
             <ImageView
@@ -116,8 +131,9 @@
 
         <LinearLayout
             android:id="@+id/navExercise"
-            android:layout_width="137dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="33"
             android:orientation="vertical">
 
 
@@ -140,8 +156,9 @@
 
         <LinearLayout
             android:id="@+id/navSetting"
-            android:layout_width="139dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:layout_weight="33"
             android:orientation="vertical">
 
 

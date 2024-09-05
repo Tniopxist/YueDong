@@ -7,6 +7,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
@@ -47,6 +48,13 @@ class HistoryActivity : AppCompatActivity() {
 
         CoroutineScope(Dispatchers.Main).launch {
             getAllExerciseRecord()
+        }
+
+
+
+        // 添加退出按钮的点击事件监听器
+        findViewById<ImageView>(R.id.exit).setOnClickListener {
+            finish() // 关闭当前Activity，返回上一个Activity
         }
     }
 
