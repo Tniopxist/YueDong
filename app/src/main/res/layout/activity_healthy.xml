@@ -39,20 +39,23 @@
         android:layout_marginTop="64dp"
         android:orientation="vertical"
         android:background="@drawable/home"
-        android:padding="30dp">
+        android:padding="30dp"
+        android:layout_marginBottom="64dp">
 
 
         <LinearLayout
             android:id="@+id/circleViewContainer"
             android:layout_width="match_parent"
-            android:layout_height="242dp"
+            android:layout_height="0dp"
+            android:layout_weight="50"
             android:background="@drawable/radius_shape"
             android:orientation="vertical">
 
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="143dp"
+                android:layout_height="0dp"
+                android:layout_weight="3"
                 android:layout_margin="5dp">
                 <!--                <ProgressBar-->
                 <!--                    android:id="@+id/progressBar3"-->
@@ -126,14 +129,16 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="2"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="33"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:gravity="center">
 
                     <TextView
                         android:id="@+id/textView4"
@@ -148,7 +153,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="3000步"
+                        android:text="0步"
                         android:textSize="17dp" />
                 </LinearLayout>
 
@@ -156,7 +161,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="33"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:gravity="center">
 
                     <TextView
                         android:id="@+id/textView5"
@@ -171,7 +177,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="3500米"
+                        android:text="0米"
                         android:textSize="17dp" />
 
                 </LinearLayout>
@@ -180,7 +186,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="33"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:gravity="center">
 
                     <TextView
                         android:id="@+id/textView6"
@@ -195,7 +202,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center"
-                        android:text="25分钟"
+                        android:text="0分钟"
                         android:textSize="17dp" />
 
                 </LinearLayout>
@@ -204,7 +211,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="105dp"
+            android:layout_height="0dp"
+            android:layout_weight="20"
             android:layout_marginTop="20dp"
             android:background="@drawable/radius_shape"
             android:orientation="horizontal">
@@ -273,7 +281,8 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="0dp"
+            android:layout_weight="30"
             android:orientation="vertical"
             android:layout_marginTop="20dp"
             >
@@ -281,7 +290,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="75dp"
+                android:layout_height="0dp"
+                android:layout_weight="50"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -296,19 +306,20 @@
 
                     <TextView
                         android:id="@+id/exerciseHistoryInfo"
-                        android:layout_width="150dp"
+                        android:layout_width="0dp"
+                        android:layout_weight="4"
                         android:layout_height="38dp"
-                        android:layout_weight="1"
                         android:padding="5dp"
                         android:text="运动历史"
                         android:textSize="21dp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:layout_gravity="center" />
 
                     <ImageView
                         android:id="@+id/exerciseIcon"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_weight="1"
+                        android:layout_height="wrap_content"
                         app:srcCompat="@drawable/record" />
                 </LinearLayout>
 
@@ -324,17 +335,18 @@
 
                     <TextView
                         android:id="@+id/healthInfo"
-                        android:layout_width="150dp"
+                        android:layout_width="0dp"
                         android:layout_height="38dp"
-                        android:layout_weight="1"
+                        android:layout_weight="4"
                         android:padding="5dp"
                         android:text="身体素质"
                         android:textSize="21dp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:layout_gravity="center" />
 
                     <ImageView
                         android:id="@+id/healthIcon"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         app:srcCompat="@drawable/weight" />
@@ -343,7 +355,8 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="50"
                 android:orientation="horizontal">
 
                 <LinearLayout
@@ -358,17 +371,18 @@
 
                     <TextView
                         android:id="@+id/booldPressureInfo"
-                        android:layout_width="150dp"
+                        android:layout_width="0dp"
                         android:layout_height="38dp"
-                        android:layout_weight="1"
+                        android:layout_weight="4"
                         android:padding="5dp"
                         android:text="血压监测"
                         android:textSize="21dp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:layout_gravity="center"/>
 
                     <ImageView
                         android:id="@+id/bloodPressureIcon"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         app:srcCompat="@drawable/blood_pressure" />
@@ -386,17 +400,18 @@
 
                     <TextView
                         android:id="@+id/heartBeatInfo"
-                        android:layout_width="150dp"
+                        android:layout_width="0dp"
                         android:layout_height="38dp"
-                        android:layout_weight="1"
+                        android:layout_weight="4"
                         android:padding="5dp"
                         android:text="心率监测"
                         android:textSize="21dp"
-                        android:textStyle="bold" />
+                        android:textStyle="bold"
+                        android:layout_gravity="center" />
 
                     <ImageView
                         android:id="@+id/heartBeatIcon"
-                        android:layout_width="wrap_content"
+                        android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         app:srcCompat="@drawable/heart" />

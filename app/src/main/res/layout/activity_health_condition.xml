@@ -78,7 +78,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:layout_marginTop="20dp">
 
             <TextView
                 android:id="@+id/heightView"
@@ -104,7 +105,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="87dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:layout_marginTop="20dp">
 
             <Button
                 android:id="@+id/input"
